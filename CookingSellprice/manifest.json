@@ -7,5 +7,5 @@
   "UniqueID": "Plastikmensch.CookingSellprice",
   "EntryDll": "CookingSellprice.dll",
   "MinimumApiVersion": "2.10.0",
-  "UpdateKeys": []
+  "UpdateKeys": [ "Github:Plastikmensch/CookingSellprice" ]
 }
