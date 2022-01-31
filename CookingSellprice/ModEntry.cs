@@ -1,6 +1,5 @@
 ﻿using System;
 using StardewModdingAPI;
-using StardewModdingAPI.Events;
 using StardewValley;
 using System.Collections.Generic;
 
@@ -34,15 +33,15 @@ namespace CookingSellprice
                         {
                             //Fish Category
                             case -4:
-                                price += 100;
+                                price += 100 * Convert.ToInt32(ingredients[i + 1]);
                                 break;
                             //EggEggEgg
                             case -5:
-                                price += 50;
+                                price += 50 * Convert.ToInt32(ingredients[i + 1]);
                                 break;
                             //Milk Category
                             case -6:
-                                price += 125;
+                                price += 125 * Convert.ToInt32(ingredients[i + 1]);
                                 break;
                             default:
                                 string[] information = data[Convert.ToInt32(ingredients[i])].Split('/');
