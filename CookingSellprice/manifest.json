@@ -2,7 +2,7 @@
 {
   "Name": "CookingSellprice",
   "Author": "Plastikmensch",
-  "Version": "1.0.1",
+  "Version": "1.0.2",
   "Description": "Increases value of cooked dishes",
   "UniqueID": "Plastikmensch.CookingSellprice",
   "EntryDll": "CookingSellprice.dll",
