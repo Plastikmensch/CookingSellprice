@@ -8,7 +8,7 @@ namespace CookingSellprice
 {
     public class ModEntry : Mod
     {
-        // Should be a ModConfig option
+        //TODO: Should be a ModConfig option
         private bool debug = false;
 
         public void OnAssetRequested(object sender, AssetRequestedEventArgs e)
@@ -18,52 +18,78 @@ namespace CookingSellprice
                 e.Edit(asset =>
                 {
                     IDictionary<int, string> data = asset.AsDictionary<int, string>().Data;
+
                     // Iterate through cooking recipes
                     foreach (KeyValuePair<string, string> pair in CraftingRecipe.cookingRecipes)
                     {
                         string[] recipe = pair.Value.Split('/');
-                        if (debug) Monitor.Log("recipe " + string.Join(",", recipe));
+                        DebugLog("recipe " + string.Join(",", recipe));
                         string[] ingredients = recipe[0].Split(' ');
                         // Some mods specify amount, even if it defaults to 1,
                         // to avoid bugs, amount gets omitted
-                        string yield = recipe[2].Split(' ')[0];
+                        int cookedItemId = int.Parse(recipe[2].Split(' ')[0]);
                         // the base value of cooked items
                         int price = 50;
+
                         // Iterate over ingredients
                         for (int i = 0; i < ingredients.Length; i += 2)
                         {
-                            switch (int.Parse(ingredients[i]))
+                            int ingredientId = int.Parse(ingredients[i]);
+                            int ingredientAmount = int.Parse(ingredients[i + 1]);
+
+                            switch (ingredientId)
                             {
                                 // Fish Category
                                 case -4:
-                                    price += 100 * int.Parse(ingredients[i + 1]);
+                                    price += 100 * ingredientAmount;
                                     break;
                                 // EggEggEgg
                                 case -5:
-                                    price += 50 * int.Parse(ingredients[i + 1]);
+                                    price += 50 * ingredientAmount;
                                     break;
                                 // Milk Category
                                 case -6:
-                                    price += 125 * int.Parse(ingredients[i + 1]);
+                                    price += 125 * ingredientAmount;
                                     break;
                                 default:
-                                    string[] information = data[int.Parse(ingredients[i])].Split('/');
-                                    price += int.Parse(information[1]) * int.Parse(ingredients[i + 1]);
+                                    string[] ingredientData = data[ingredientId].Split('/');
+                                    price += int.Parse(ingredientData[1]) * ingredientAmount;
                                     break;
                             }
                         }
-                        if (debug) Monitor.Log("recipe[2] " + yield);
-                        string[] fields = data[int.Parse(yield)].Split('/');
+
+                        DebugLog("recipe[2] " + cookedItemId);
+                        // Get cooked item data
+                        string[] fields = data[cookedItemId].Split('/');
+                        string oldPrice = fields[1];
+
                         // Don't decrease price
-                        if (int.Parse(fields[1]) < price)
+                        if (int.Parse(oldPrice) < price)
                         {
                             fields[1] = price.ToString();
                             string newinfo = string.Join("/", fields);
-                            data[int.Parse(yield)] = newinfo;
+                            data[cookedItemId] = newinfo;
+                            DebugLog($"new price for {pair.Key}: {price}. Was: {oldPrice}");
                         }
-                        //Monitor.VerboseLog($"new price for {pair.Key}: {price}");
+                        else
+                        {
+                            DebugLog($"price for {pair.Key}: {oldPrice}");
+                        }
+
+                        // Used to create the table in the Readme. Convenient.
+                        //Monitor.Log($"{pair.Key} | {fields[1]}g");
                     }
                 });
+            }
+        }
+
+        // Used to log verbose information
+        // Less spammy, since verbose logging in SMAPI will print verbose log of every installed mod
+        private void DebugLog(string message)
+        {
+            if (debug)
+            {
+                Monitor.Log(message);
             }
         }
 
