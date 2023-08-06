@@ -82,3 +82,9 @@ Crab Cakes | 350g
 Triple Shot Espresso | 500g
 Shrimp Cocktail | 220g
 Seafoam Pudding | 410g
+Ginger Ale | 280g
+Banana Pudding | 375g
+Mango Sticky Rice | 380g
+Poi | 450g
+Tropical Curry | 500g
+Squid Ink Ravioli | 270g
