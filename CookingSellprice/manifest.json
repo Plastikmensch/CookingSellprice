@@ -2,10 +2,10 @@
 {
   "Name": "CookingSellprice",
   "Author": "Plastikmensch",
-  "Version": "1.0.2",
+  "Version": "1.1.0",
   "Description": "Increases value of cooked dishes",
   "UniqueID": "Plastikmensch.CookingSellprice",
   "EntryDll": "CookingSellprice.dll",
-  "MinimumApiVersion": "2.10.0",
+  "MinimumApiVersion": "3.18.0",
   "UpdateKeys": [ "Github:Plastikmensch/CookingSellprice" ]
 }
