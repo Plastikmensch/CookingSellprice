@@ -4,6 +4,8 @@ Just a simple Stardew Valley Mod which increases the value of cooked items
 ## What this does
 Calculates the price of cooked items by adding the price of ingredients in the recipe, while not decreasing the default value. Example "Omelet" (default 125g): base item price (50g) + Egg (50g) + Milk (125g) = 225g
 
+Because recipes don't take ingredient value into account and some recipes can require any item of a category (like fish), using better quality items or expensive fish has no effect on price.
+
 ## Prices
 
 Item | Price
