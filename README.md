@@ -90,3 +90,4 @@ Mango Sticky Rice | 380g
 Poi | 450g
 Tropical Curry | 500g
 Squid Ink Ravioli | 270g
+Moss Soup | 150g
