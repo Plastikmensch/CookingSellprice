@@ -6,17 +6,38 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "msbuild",
+            "command": "dotnet",
             "args": [
-                // Ask msbuild to generate full paths for file names.
-                "/property:GenerateFullPaths=true",
-                "/t:build",
+                "build",
+                "/p:Configuration=\"Debug\"",
+                "/p:Platform=\"Any CPU\"",
                 // Do not generate summary otherwise it leads to duplicate errors in Problems panel
                 "/consoleloggerparameters:NoSummary"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "silent"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build (release)",
+            "type": "shell",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "/p:Configuration=\"Release\"",
+                "/p:Platform=\"Any CPU\"",
+                // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": {
+                "kind": "build"
             },
             "presentation": {
                 // Reveal the output only if unrecognized errors occur.
