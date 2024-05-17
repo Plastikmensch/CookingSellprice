@@ -1,7 +1,6 @@
-﻿using System;
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewValley;
-using System.Collections.Generic;
+using StardewValley.GameData.Objects;
 using StardewModdingAPI.Events;
 
 namespace CookingSellprice
@@ -11,13 +10,14 @@ namespace CookingSellprice
         //TODO: Should be a ModConfig option
         private bool debug = false;
 
+        /// <inheritdoc cref="IContentEvents.AssetRequested"/>
         public void OnAssetRequested(object sender, AssetRequestedEventArgs e)
         {
-            if (e.NameWithoutLocale.IsEquivalentTo("Data/ObjectInformation"))
+            if (e.NameWithoutLocale.IsEquivalentTo("Data/Objects") && CraftingRecipe.cookingRecipes != null)
             {
                 e.Edit(asset =>
                 {
-                    IDictionary<int, string> data = asset.AsDictionary<int, string>().Data;
+                    IDictionary<string, ObjectData> data = asset.AsDictionary<string, ObjectData>().Data;
 
                     // Iterate through cooking recipes
                     foreach (KeyValuePair<string, string> pair in CraftingRecipe.cookingRecipes)
@@ -27,48 +27,43 @@ namespace CookingSellprice
                         string[] ingredients = recipe[0].Split(' ');
                         // Some mods specify amount, even if it defaults to 1,
                         // to avoid bugs, amount gets omitted
-                        int cookedItemId = int.Parse(recipe[2].Split(' ')[0]);
+                        string cookedItemId = recipe[2].Split(' ')[0];
                         // the base value of cooked items
                         int price = 50;
 
                         // Iterate over ingredients
                         for (int i = 0; i < ingredients.Length; i += 2)
                         {
-                            int ingredientId = int.Parse(ingredients[i]);
+                            string ingredientId = ingredients[i];
                             int ingredientAmount = int.Parse(ingredients[i + 1]);
 
                             switch (ingredientId)
                             {
                                 // Fish Category
-                                case -4:
+                                case "-4":
                                     price += 100 * ingredientAmount;
                                     break;
                                 // EggEggEgg
-                                case -5:
+                                case "-5":
                                     price += 50 * ingredientAmount;
                                     break;
                                 // Milk Category
-                                case -6:
+                                case "-6":
                                     price += 125 * ingredientAmount;
                                     break;
                                 default:
-                                    string[] ingredientData = data[ingredientId].Split('/');
-                                    price += int.Parse(ingredientData[1]) * ingredientAmount;
+                                    price += data[ingredientId].Price * ingredientAmount;
                                     break;
                             }
                         }
 
-                        DebugLog("recipe[2] " + cookedItemId);
-                        // Get cooked item data
-                        string[] fields = data[cookedItemId].Split('/');
-                        string oldPrice = fields[1];
+                        DebugLog("cookedItemId " + cookedItemId);
+                        int oldPrice = data[cookedItemId].Price;
 
                         // Don't decrease price
-                        if (int.Parse(oldPrice) < price)
+                        if (oldPrice < price)
                         {
-                            fields[1] = price.ToString();
-                            string newinfo = string.Join("/", fields);
-                            data[cookedItemId] = newinfo;
+                            data[cookedItemId].Price = price;
                             DebugLog($"new price for {pair.Key}: {price}. Was: {oldPrice}");
                         }
                         else
@@ -77,7 +72,7 @@ namespace CookingSellprice
                         }
 
                         // Used to create the table in the Readme. Convenient.
-                        //Monitor.Log($"{pair.Key} | {fields[1]}g");
+                        //Monitor.Log($"{pair.Key} | {data[cookedItemId].Price}g");
                     }
                 });
             }
@@ -93,6 +88,7 @@ namespace CookingSellprice
             }
         }
 
+        ///  <inheritdoc/>
         public override void Entry(IModHelper helper)
         {
             helper.Events.Content.AssetRequested += this.OnAssetRequested;

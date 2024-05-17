@@ -1,17 +1,22 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingSellprice", "CookingSellprice\CookingSellprice.csproj", "{DF9CFB16-481A-4968-B09F-C91C41A26B5E}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingSellprice", "CookingSellprice\CookingSellprice.csproj", "{3185113E-4184-4C2E-AAC7-C38AFE07E301}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF9CFB16-481A-4968-B09F-C91C41A26B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF9CFB16-481A-4968-B09F-C91C41A26B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF9CFB16-481A-4968-B09F-C91C41A26B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF9CFB16-481A-4968-B09F-C91C41A26B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3185113E-4184-4C2E-AAC7-C38AFE07E301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3185113E-4184-4C2E-AAC7-C38AFE07E301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3185113E-4184-4C2E-AAC7-C38AFE07E301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3185113E-4184-4C2E-AAC7-C38AFE07E301}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
