@@ -31,6 +31,15 @@ namespace CookingSellprice
                         // the base value of cooked items
                         int price = 50;
 
+                        // Due to load order of mods, sometimes a recipe might already be loaded while the cooked item isn't.
+                        // AssetEditPriority.Late should prevent this from happening with most mods, but just in case:
+                        // Skip editing the unloaded item.
+                        if (!data.ContainsKey(cookedItemId))
+                        {
+                            Monitor.Log($"Couldn't edit {cookedItemId} as its data wasn't loaded yet", LogLevel.Error);
+                            continue;
+                        }
+
                         // Iterate over ingredients
                         for (int i = 0; i < ingredients.Length; i += 2)
                         {
@@ -74,7 +83,7 @@ namespace CookingSellprice
                         // Used to create the table in the Readme. Convenient.
                         //Monitor.Log($"{pair.Key} | {data[cookedItemId].Price}g");
                     }
-                });
+                }, AssetEditPriority.Late);
             }
         }
 
